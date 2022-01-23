@@ -1,0 +1,47 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:{} arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:nil e:t
+#+options: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+options: tasks:t tex:t timestamp:t title:t toc:nil todo:nil |:t
+#+title: Spec
+#+date: <2022-01-22 Sat>
+#+author:
+#+email: omar@BIGARCH
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.2 (Org mode 9.5.1)
+#+cite_export:
+* Abstract
+
+The purpose of this document is to formalise and disambiguate the specification of this software. It shall:
+ * Define the language
+ * Design the backend Haskell datatypes
+   * Need to list the different required datatypes
+ * Design the Haskell Class(es)
+   * Need
+* BNF
+
+program ≔ <block> \n <program> | ε
+block ≔ <resource_block> | <job_block>
+resource_block ≔ 'resource' <resource_type> <name> '{' <resource_properties> '}'
+resource_properties ≔ "I would think this would depend on the type of resource... Maybe find a way to avoid this?"
+
+job_block ≔ 'job' <name> '['<job_properties>']' '{'<script>'}'
+job_properties ≔ <job_property>, <job_properties> | ε
+job_property ≔ 'needs=['<names>']' |
+               'after=['<names>']' |
+               'mutable='<true|false>
+* Backend
+** Class(es)
+Hmm... Not sure how to approach this one. But I think I need the following:
+ - Workflow Class
+
+   This one is what the the file is going to be parsed into... Although I am not sure this is possible... I think it is possible!
+
+   This will be interpreted by the different data types into actual useful data.
+
+ - Ordering
+
+   Eh, don't know... I just need something help me order the actions, see what can be done in parallell and  what needs to be done in order...
+** Types
+... Yeah, I don't know. One approach is to seperate the resrouces and the flows into two different datatypes, but I don't know about this...
