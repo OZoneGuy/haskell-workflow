@@ -1,0 +1,50 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:{} arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:nil e:t
+#+options: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+options: tasks:t tex:t timestamp:t title:t toc:nil todo:nil |:t
+#+title: Requirements
+#+date: <2022-02-04 Fri>
+#+author:
+#+email: omar@BIGARCH
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.2 (Org mode 9.5.1)
+#+cite_export:
+
+* Product Description
+
+This project must define a DSL(Domain Specific Language) embedded in Haskell and must provide a parser for this language. The language can be written directly in Haskell or can be written in a text file to be parsed and compiled by Haskell into the embedded DSL.
+
+The language will define workflows. These workflows consist of resources and jobs that utilise these resources. Jobs are essentially scripts. While jobs can be executed concurrently, some jobs may depend on each other and will need to be scheduled appropriately.
+* Requirements
+** Functional Requirements
+
+*** Jobs
+ * Jobs must be able to execute concurrently
+ * Resources must be fully available and prepared before the requiring job(s) is/are run
+ * All jobs must have their dependencies completed before executing
+ * Jobs must define conditions to run
+ * Jobs conditions may be empty, meaning they will always execute
+ * Jobs may only execute if their dependencies execute successfully, unless specified otherwise in their conditions
+ * Resources must be able to be reverted to a checkpoint state
+ * Resources must have checkpoint states
+   * Checkpoint states are the states on successful creation and after each using job
+ * Resources must be able to be recreated or refreshed
+ * Jobs must be able to have output
+ * Jobs must be able to read output from their dependency jobs
+ * Program must be able to output execution/depency graph
+*** Compiler/Parser
+ * Parser must provide errors
+ * Parser must provide location of error
+ * Parser must provide Reason of error
+ * Compiler should compile parsed program into the DSL
+ * Compiler must provide errors on failure
+ * Compiler must provide detailed errors
+ * Compiler must provide option to output compiled program
+ * Created names and identifier must not clash with already defined tokens in Haskell
+ * Compiler must be able to identify cyclic job dependency
+ * Compiler must be able to notify developer of cyclic job dependency
+** Non-Functional Requirements
+ * DSL must be close to natural language
+ * Error messages must be easy to understand
