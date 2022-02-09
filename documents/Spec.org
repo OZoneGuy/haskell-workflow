@@ -2,7 +2,7 @@
 #+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:nil e:t
 #+options: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
 #+options: tasks:t tex:t timestamp:t title:t toc:nil todo:nil |:t
-#+title: Spec
+#+title: Design
 #+date: <2022-01-22 Sat>
 #+author:
 #+email: omar@BIGARCH
@@ -18,19 +18,9 @@ The purpose of this document is to formalise and disambiguate the specification 
  * Design the backend Haskell datatypes
    * Need to list the different required datatypes
  * Design the Haskell Class(es)
-   * Need
+   * Need to list the classes and their purposes, at least. Preferrably also add the class functions and the purposes.
 * BNF
 
-program ≔ <block> \n <program> | ε
-block ≔ <resource_block> | <job_block>
-resource_block ≔ 'resource' <resource_type> <name> '{' <resource_properties> '}'
-resource_properties ≔ "I would think this would depend on the type of resource... Maybe find a way to avoid this?"
-
-job_block ≔ 'job' <name> '['<job_properties>']' '{'<script>'}'
-job_properties ≔ <job_property>, <job_properties> | ε
-job_property ≔ 'needs=['<names>']' |
-               'after=['<names>']' |
-               'mutable='<true|false>
 * Backend
 ** Class(es)
 Hmm... Not sure how to approach this one. But I think I need the following:
