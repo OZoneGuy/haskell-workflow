@@ -21,30 +21,37 @@ The language will define workflows. These workflows consist of resources and job
 ** Functional Requirements
 
 *** Jobs
- * Jobs must be able to execute concurrently
- * Resources must be fully available and prepared before the requiring job(s) is/are run
- * All jobs must have their dependencies completed before executing
- * Jobs must define conditions to run
- * Jobs conditions may be empty, meaning they will always execute
- * Jobs may only execute if their dependencies execute successfully, unless specified otherwise in their conditions
- * Resources must be able to be reverted to a checkpoint state
- * Resources must have checkpoint states
-   * Checkpoint states are the states on successful creation and after each using job
- * Resources must be able to be recreated or refreshed
- * Jobs must be able to have output
- * Jobs must be able to read output from their dependency jobs
- * Program must be able to output execution/depency graph
+ 1. Jobs must be able to execute concurrently
+ 2. Resources must be fully available and prepared before the requiring job(s) is/are run
+ 3. All jobs must have their dependencies completed before executing
+ 4. Jobs must define conditions to run
+ 5. Jobs conditions may be empty, meaning they will always execute
+ 6. Jobs may only execute if their dependencies execute successfully, unless specified otherwise in their conditions
+ 7. Resources must be able to be reverted to a checkpoint state
+ 8. Resources must have checkpoint states
+    * Checkpoint states are the states on successful creation and after each using job
+ 9. Resources must be able to be recreated or refreshed
+ 10. Jobs must be able to have output
+ 11. Jobs must be able to read output from their dependency jobs
+ 12. Program must be able to output execution/depency graph
+ 13. Jobs must be able to execute scripts written in different langauges
+ 14. Jobs must allow user to specify which language the script is written in
+ 15. Jobs may be defined in a seperate file
+ 16. Different jobs may not have the same name in the same file
+ 17. Different jobs may have the same name in different files
+ 18. Jobs must be able to reference jobs in different files
+ 19. Jobs with the same name from different sources must be differentiatable
 *** Compiler/Parser
- * Parser must provide errors
- * Parser must provide location of error
- * Parser must provide Reason of error
- * Compiler should compile parsed program into the DSL
- * Compiler must provide errors on failure
- * Compiler must provide detailed errors
- * Compiler must provide option to output compiled program
- * Created names and identifier must not clash with already defined tokens in Haskell
- * Compiler must be able to identify cyclic job dependency
- * Compiler must be able to notify developer of cyclic job dependency
+ 1. Parser must provide errors
+ 2. Parser must provide location of error
+ 3. Parser must provide Reason of error
+ 4. Compiler should compile parsed program into the DSL
+ 5. Compiler must provide errors on failure
+ 6. Compiler must provide detailed errors
+ 7. Compiler must provide option to output compiled program
+ 8. Created names and identifier must not clash with already defined tokens in Haskell
+ 9. Compiler must be able to identify cyclic job dependency
+ 10. Compiler must be able to notify developer of cyclic job dependency
 ** Non-Functional Requirements
- * DSL must be close to natural language
- * Error messages must be easy to understand
+ 1. DSL must be close to natural language
+ 2. Error messages must be easy to understand
