@@ -41,6 +41,10 @@ The language will define workflows. These workflows consist of resources and job
  17. Different jobs may have the same name in different files
  18. Jobs must be able to reference jobs in different files
  19. Jobs with the same name from different sources must be differentiatable
+ 20. User must be able to define objects
+ 21. Jobs must be able to pass data between each other
+ 22. Jobs must be able to verify data structure
+     * The data must match whatever type it is
 *** Compiler/Parser
  1. Parser must provide errors
  2. Parser must provide location of error
