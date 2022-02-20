@@ -1,27 +1,45 @@
+{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 import Data.Map (Map, assocs)
-import Language.Haskell.TH
+import qualified Language.Haskell.TH as TH
 import Language.Haskell.TH.Syntax (Dec (DataD))
-import Types (NewResource (properties, resType), NewType (fields, name))
+import qualified Types as RT (NewResource(..), ResourceClass, Resource(..))
+import qualified Types as TT (NewType(..), TypeClass, Type(..))
 
-emptyBang :: Bang
-emptyBang = Bang NoSourceUnpackedness NoSourceStrictness
+emptyBang :: TH.Bang
+emptyBang = TH.Bang TH.NoSourceUnpackedness TH.NoSourceStrictness
 
-declareType :: NewType -> Dec
+propFields :: (String, String) -> (TH.Name, TH.Bang, TH.Type)
+propFields (nm, tp) = (TH.mkName nm, emptyBang, TH.ConT (TH.mkName tp))
+
+instantiateClass :: TH.Type -> TH.Name -> Dec
+instantiateClass ct tn = TH.InstanceD Nothing [] (f ct) []
+  where
+    f classType = TH.AppT classType $ TH.ConT tn
+
+declareType :: TT.NewType -> Dec
 declareType t =
-  let recField :: (String, String) -> (Name, Bang, Type)
-      recField (nm, tp) = (mkName nm, emptyBang, ConT (mkName tp))
-      fieldsList = assocs $ fields t
-      con = RecC tName $ map recField fieldsList
-      tName = mkName $ name t
+  let fieldsList = assocs $ TT.fields t
+      con = TH.RecC tName $ map propFields fieldsList
+      tName = TH.mkName $ TT.name t
    in DataD [] tName [] Nothing [con] []
 
-declareResource :: NewResource -> Dec
+instantiateType :: TH.Name -> Dec
+instantiateType = instantiateClass typeClass
+
+typeClass :: TH.Type
+typeClass = TH.ConT ''TT.TypeClass
+
+declareResource :: RT.NewResource -> Dec
 declareResource r =
-  let recField :: (String, String) -> (Name, Bang, Type)
-      recField (nm, tp) = (mkName nm, emptyBang, ConT (mkName tp))
-      fieldsList = assocs $ properties r
-      con = RecC tName $ map recField fieldsList
-      tName = mkName $ resType r
+  let fieldsList = assocs $ RT.properties r
+      con = TH.RecC tName $ map propFields fieldsList
+      tName = TH.mkName $ RT.resType r
    in DataD [] tName [] Nothing [con] []
+
+instantiateResource :: TH.Name -> Dec
+instantiateResource = instantiateClass resClass
+
+resClass :: TH.Type
+resClass = TH.ConT ''RT.ResourceClass
